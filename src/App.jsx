@@ -1,14 +1,17 @@
-import './App.css'
-import Notes from './Components/Notes/Notes'
+import Modal from "./components/Modal"
+import TodoList from "./components/TodoList"
+
 
 function App() {
-
+ 
 
   return (
-    <main >
-      <Notes />
-    </main>
-  );
+    <>
+    <TodoList/>
+  
+
+    </>
+  )
 }
 
 export default App
