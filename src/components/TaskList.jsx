@@ -21,7 +21,7 @@ const TaskList = ({
         <div className="flex justify-center items-center gap-2">
           <input
             type="checkbox"
-        onClick={()=>onCompleat(task)}
+            onClick={() => onCompleat(task)}
             className="checkbox checkbox-primary mr-5  "
           />
           {/* <h2 className="card-title text-black">{task.id}.</h2> */}
@@ -34,11 +34,9 @@ const TaskList = ({
           >
             X
           </button>
-
           <UpdateTask
-          task={task}
-          
-
+            task={task}
+       
           />
         </div>
       </div>

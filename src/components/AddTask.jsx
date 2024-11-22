@@ -13,18 +13,19 @@ const AddTask = ({ onAdd, showModal, setShowModal }) => {
   return (
     <div>
       <button
-        className="btn bg-zinc-500 text-white"
+        className="btn bg-zinc-500 px-3 py-1
+        rounded hover:bg-green-800 duration-500 text-white"
         onClick={() => setShowModal(!showModal)}
       >
         Add Task
       </button>
-      <dialog className="modal" open={showModal}>
-        <div className="modal-box">
-          <h2 className="text-center font-bold text-xl ">
+      <dialog className="modal rounded" open={showModal}>
+        <div className="modal-box pl-2 pt-6 pr-3 pb-3 ">
+          <h2 className="text-left font-bold text-xl my-3 ">
             Add Your Valuable Task
           </h2>
           <button
-            className="btn btn-sm bg-red-600 btn-circle btn-ghost absolute right-2 top-2"
+            className=" bg-red-600 rounded-full px-2  absolute right-2 top-2  hover:bg-yellow-700 "
             onClick={() => setShowModal(!showModal)}
           >
             X
@@ -32,17 +33,20 @@ const AddTask = ({ onAdd, showModal, setShowModal }) => {
           <form onSubmit={handleAddTask} method="dialog">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Title</span>
+                <span className="label-text mr-2 font-bold">Title</span>
               </label>
               <input
                 type="text"
                 name="title"
                 placeholder="Add Your Title"
-                className="input input-bordered"
+                className="border pl-1 mb-6"
               />
             </div>
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
+              <button
+                type="submit"
+                className="bg-green-600 rounded-full px-2 py-1  absolute right-2 bottom-2  hover:bg-yellow-700 "
+              >
                 Add Task
               </button>
             </div>
