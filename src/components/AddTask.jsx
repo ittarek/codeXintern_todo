@@ -4,8 +4,12 @@ const AddTask = ({ onAdd, showModal, setShowModal }) => {
   const handleAddTask = e => {
     e.preventDefault();
     const form = e.target;
-    const title = form.title.value;
-    onAdd(title);
+    const title = form.title.value.trim();
+        if (!title) {
+          alert("Title cannot be empty!");
+          return;
+        }
+        onAdd(title);
     form.title.value = "";
     setShowModal(!showModal);
   };
@@ -40,6 +44,7 @@ const AddTask = ({ onAdd, showModal, setShowModal }) => {
                 name="title"
                 placeholder="Add Your Title"
                 className="border pl-1 mb-6"
+                required
               />
             </div>
             <div className="form-control mt-6">

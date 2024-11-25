@@ -2,12 +2,12 @@ import { useState } from "react";
 import UpdateTask from "./UpdateTask";
 
 const TaskList = ({
-  task,
+  tasks,
   handleDelete,
   setShowModal,
   showModal,
-
-
+onAdd,
+setTask,
   onCompleat
 }) => {
 
@@ -21,22 +21,24 @@ const TaskList = ({
         <div className="flex justify-center items-center gap-2">
           <input
             type="checkbox"
-            onClick={() => onCompleat(task)}
+            onClick={() => onCompleat(tasks)}
             className="checkbox checkbox-primary mr-5  "
           />
           {/* <h2 className="card-title text-black">{task.id}.</h2> */}
-          <p className="text-black justify-start">{task.title}</p>
+          <p className="text-black justify-start">{tasks.title}</p>
         </div>
         <div className="flex gap-3">
           <button
-            onClick={() => handleDelete(task.id)}
+            onClick={() => handleDelete(tasks.id)}
             className="bg-red-700 px-3 rounded text-white font-bold"
           >
             X
           </button>
           <UpdateTask
-            task={task}
-       
+            tasks={tasks}
+            id={tasks.id}
+       onAdd={onAdd}
+       setTask={setTask}
           />
         </div>
       </div>
