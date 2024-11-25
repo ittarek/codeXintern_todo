@@ -73,15 +73,8 @@ const TodoList = () => {
       <h2 className="text-4xl font-bold text-center text-purple-900">
         My Todo List
       </h2>
-      <div className="flex justify-between ">
-        <div className="flex">
-          <p className="mr-5 font-bold">Compleat</p>
-          {/* <p className="mr-5 font-bold">NO</p> */}
-          <p className="font-bold">Title</p>
-        </div>
-        <p className="mr-11 font-bold">Delete</p>
-      </div>
-      <div className="flex justify-center items-start flex-col">
+   
+      <div className="flex justify-center items-start flex-col ">
         {tasks.map(task => (
           <TaskList
             key={task.id}

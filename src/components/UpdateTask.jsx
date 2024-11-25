@@ -16,7 +16,7 @@ const UpdateTask = ({ task, onAdd, setShowModal, showModal }) => {
   return (
     <div>
       <button
-        className="btn bg-zinc-500 text-white"
+        className="btn bg-zinc-500 text-white p-1 rounded"
         onClick={() => setUpdateModal(!updateModal)}
       >
         Edit

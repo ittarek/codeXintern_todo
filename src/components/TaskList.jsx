@@ -16,7 +16,7 @@ const TaskList = ({
   const [check, setCheck] = useState(false);
 
   return (
-    <div className="card w-full my-5 bg-slate-300 ">
+    <div className="card w-full my-5 bg-slate-300 px-1 py-3 rounded">
       <div className="card-body flex justify-between items-center flex-row  text-center">
         <div className="flex justify-center items-center gap-2">
           <input
@@ -30,7 +30,7 @@ const TaskList = ({
         <div className="flex gap-3">
           <button
             onClick={() => handleDelete(task.id)}
-            className="btn btn-warning "
+            className="bg-red-700 px-3 rounded text-white font-bold"
           >
             X
           </button>
