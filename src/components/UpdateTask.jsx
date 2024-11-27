@@ -35,7 +35,7 @@ const UpdateTask = ({ tasks, id, setTask }) => {
   return (
     <div>
       <button
-        className="btn bg-zinc-500 text-white p-1 rounded"
+        className="btn bg-zinc-500 text-white p-1 rounded ml-1"
         onClick={() => setUpdateModal(true)}
       >
         Edit

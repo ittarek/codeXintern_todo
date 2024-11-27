@@ -1,85 +1,49 @@
-import { useEffect } from "react";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import TaskList from "./TaskList";
 import AddTask from "./AddTask";
+import { useTodos } from "../store/todos";
 
 const TodoList = () => {
   const [showModal, setShowModal] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
-  const [tasks, setTask] = useState([]);
+  const { tasks } = useTodos();
+  const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    setTask(storedTasks);
-  }, []);
-
-  const onAdd = title => {
-    const newTask = {
-      id: Date.now(),
-      title,
-      createdAt: Date.now(),
-    };
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const updatedTasks = [...storedTasks, newTask];
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setTask(updatedTasks);
-  };
-  // Sort notes by createdAt in descending order
-  const sortedTask = tasks.sort((a, b) => b.createdAt - a.createdAt);
-  // delete todo
-const handleDelete = id => {
-  if (confirm("Are you sure you want to delete this task?")) {
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const updatedTasks = storedTasks.filter(task => task.id !== id);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setTask(updatedTasks);
-
-    alert("Task deleted successfully!");
-  } else {
-    console.log("Task deletion canceled.");
-  }
-};
-
-
-const onCompleat = task => {
-  if (task.completed) {
-    return alert("Task is already completed");
-  }
-  const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  const updatedTasks = storedTasks.map(t => {
-    if (t.id === task.id) {
-      return { ...t, completed: true };    }
-    return t;
+  // Filter tasks based on query parameter
+  const filter = searchParams.get("tasks"); // Get the 'tasks' parameter
+  const filteredTasks = tasks.filter(task => {
+    if (filter === "active") return !task.completed;
+    if (filter === "completed") return task.completed;
+    return true; // Default: show all tasks
   });
-  localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-  setTask(updatedTasks);
-};
 
+  // Sort tasks by creation date (descending order)
+  const sortedTasks = filteredTasks.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   return (
-    <div className="bg-slate-400 w-2/3 mx-auto my-3 p-10 rounded-sm">
-      <AddTask
-        onAdd={onAdd}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
+    <div className="todoList bg-slate-400 w-2/3 mx-auto my-3 p-10 rounded-sm">
+      {/* Add Task Modal */}
+      <AddTask showModal={showModal} setShowModal={setShowModal} />
       <h2 className="text-4xl font-bold text-center text-purple-900">
         My Todo List
       </h2>
 
-      <div className="flex justify-center items-start flex-col ">
-        {sortedTask.map(task => (
-          <TaskList
-          onAdd={onAdd}
-            key={task.id}
-            tasks={task}
-            handleDelete={handleDelete}
-            setShowModal={setShowModal}
-            showModal={showModal}
-            onCompleat={onCompleat}
-            setTask={setTask}
-          ></TaskList>
-        ))}
+      {/* Task List */}
+      <div className="flex justify-center items-start flex-col">
+        {sortedTasks.length > 0 ? (
+          sortedTasks.map(task => (
+            <TaskList
+              key={task.id}
+              task={task}
+              setShowModal={setShowModal}
+              showModal={showModal}
+            />
+          ))
+        ) : (
+          <p className="text-center text-gray-600">No tasks found.</p>
+        )}
       </div>
     </div>
   );

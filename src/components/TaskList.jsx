@@ -1,46 +1,39 @@
-import { useState } from "react";
 import UpdateTask from "./UpdateTask";
+import { useTodos } from "../store/todos";
 
-const TaskList = ({
-  tasks,
-  handleDelete,
-  setShowModal,
-  showModal,
-onAdd,
-setTask,
-  onCompleat
-}) => {
-
-
-  
-  const [check, setCheck] = useState(false);
+const TaskList = ({task}) => {
+  const {  toggleTodoAsCompleted, handleDeleteTodo } = useTodos();
+console.log(task);
 
   return (
-    <div className="card w-full my-5 bg-slate-300 px-1 py-3 rounded">
-      <div className="card-body flex justify-between items-center flex-row  text-center">
-        <div className="flex justify-center items-center gap-2">
-          <input
-            type="checkbox"
-            onClick={() => onCompleat(tasks)}
-            className="checkbox checkbox-primary mr-5  "
-          />
-          {/* <h2 className="card-title text-black">{task.id}.</h2> */}
-          <p className="text-black justify-start">{tasks.title}</p>
-        </div>
-        <div className="flex gap-3">
+    <div className="main-task grid-cols-3 flex items-center w-full my-3 bg-slate-300 rounded">
+      <li className="grid grid-cols-3 items-center w-full">
+        {/* Checkbox for toggling completion */}
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => toggleTodoAsCompleted(task.id)}
+          className="checkbox checkbox-primary mr-5"
+        />
+
+        {/* Task title */}
+        <label htmlFor={`task-${task.id}`}> {task.task} </label>
+    
+        {/* Delete button (only shows if completed) */}
+        {task.completed && (
           <button
-            onClick={() => handleDelete(tasks.id)}
-            className="bg-red-700 px-3 rounded text-white font-bold"
+            className="btn bg-zinc-500 text-white p-1 rounded"
+            type="button"
+            onClick={() => handleDeleteTodo(task.id)}
           >
-            X
+            Delete
           </button>
-          <UpdateTask
-            tasks={tasks}
-            id={tasks.id}
-       onAdd={onAdd}
-       setTask={setTask}
-          />
-        </div>
+        )}
+      </li>
+
+      {/* Update task button */}
+      <div>
+        <UpdateTask tasks={task} id={task.id} />
       </div>
     </div>
   );
