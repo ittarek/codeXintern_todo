@@ -1,35 +1,21 @@
 import { useState } from "react";
+import { useTodos } from "../store/todos";
 
-const UpdateTask = ({ tasks, id, setTask }) => {
+const UpdateTask = ({ task }) => {
+  const { handleUpdateTodo } = useTodos(); // Get the update function from context
   const [updateModal, setUpdateModal] = useState(false);
+  const [newTitle, setNewTitle] = useState(task.task);
 
   const handleEditTask = e => {
     e.preventDefault();
-    const form = e.target;
-    const newTitle = form.title.value.trim();
 
-    if (!newTitle) {
-      alert("Title cannot be empty!");
+    if (!newTitle.trim()) {
+      alert("Task title cannot be empty!");
       return;
     }
 
-    // Fetch tasks from localStorage
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    // Update the task with matching ID
-    const updatedTasks = storedTasks.map(task =>
-      task.id === id
-        ? { ...task, title: newTitle, updatedAt: Date.now() }
-        : task
-    );
-
-    // Save updated tasks to localStorage and state
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setTask(updatedTasks);
-
-    // Clear form and close modal
-    form.title.value = "";
-    setUpdateModal(false);
+    handleUpdateTodo(task.id, newTitle); // Call the update function
+    setUpdateModal(false); // Close the modal
   };
 
   return (
@@ -51,7 +37,7 @@ const UpdateTask = ({ tasks, id, setTask }) => {
             >
               X
             </button>
-            <form method="dialog" onSubmit={handleEditTask}>
+            <form onSubmit={handleEditTask}>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text mr-2 font-bold">Title</span>
@@ -59,6 +45,8 @@ const UpdateTask = ({ tasks, id, setTask }) => {
                 <input
                   type="text"
                   name="title"
+                  value={newTitle}
+                  onChange={e => setNewTitle(e.target.value)}
                   placeholder="Edit your title"
                   className="border pl-1 mb-6 w-full"
                   required

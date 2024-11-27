@@ -33,7 +33,7 @@ console.log(task);
 
       {/* Update task button */}
       <div>
-        <UpdateTask tasks={task} id={task.id} />
+        <UpdateTask task={task} id={task.id} />
       </div>
     </div>
   );

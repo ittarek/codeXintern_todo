@@ -50,6 +50,18 @@ export const TodosProvider = ({ children }) => {
       return updatedTodos;
     });
   };
+  // Update/Edit a task
+  const handleUpdateTodo = (id, newTask) => {
+    setTodos(prev => {
+      const updatedTodos = prev.map(todo =>
+        todo.id === id
+          ? { ...todo, task: newTask, updatedAt: new Date() }
+          : todo
+      );
+      localStorage.setItem("tasks", JSON.stringify(updatedTodos));
+      return updatedTodos;
+    });
+  };
 
   return (
     <todosContext.Provider
@@ -58,6 +70,7 @@ export const TodosProvider = ({ children }) => {
         handleAddTodo,
         toggleTodoAsCompleted,
         handleDeleteTodo,
+        handleUpdateTodo,
       }}
     >
       {children}
